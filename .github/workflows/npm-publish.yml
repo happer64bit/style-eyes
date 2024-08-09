@@ -17,8 +17,10 @@ jobs:
         with:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
+      - run: npm config set registry https://registry.npmjs.org
+      - run: npm config set _auth ${{ secrets.NODE_TOKEN }}
       - run: npm install
       - run: npm run build
-      - run: npm publish 
+      - run: npm publish
         env:
           NPM_TOKEN: ${{ secrets.NODE_TOKEN }}
