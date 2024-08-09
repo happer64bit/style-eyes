@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+const { program } = require('commander');
+const fs = require('fs');
+const path = require('path');
+const { optimizeCSS } = require('../lib/index');
+
+// Define command options with default output file
+program
+  .version('1.0.0')
+  .description('Optimize CSS files by combining properties')
+  .arguments('<inputFile> [outputFile]')
+  .action((inputFile, outputFile) => {
+    // Set default output file if not provided
+    const defaultOutputFile = inputFile.replace(/\.css$/, '.o.css');
+    const outputPath = outputFile
+      ? path.resolve(process.cwd(), outputFile)
+      : path.resolve(process.cwd(), defaultOutputFile);
+
+    // Read the input file
+    const inputPath = path.resolve(process.cwd(), inputFile);
+    let css;
+
+    try {
+      css = fs.readFileSync(inputPath, 'utf8');
+    } catch (error) {
+      console.error(`Error reading file: ${inputPath}`);
+      console.error(error.message);
+      process.exit(1);
+    }
+
+    // Optimize CSS
+    const optimizedCSS = optimizeCSS(css);
+
+    // Write the optimized CSS to the output file
+    try {
+      fs.writeFileSync(outputPath, optimizedCSS);
+      console.log(`Optimized CSS written to: ${outputPath}`);
+    } catch (error) {
+      console.error(`Error writing file: ${outputPath}`);
+      console.error(error.message);
+      process.exit(1);
+    }
+  });
+
+// Parse command-line arguments
+program.parse(process.argv);
