@@ -1,14 +1,29 @@
 {
   "name": "style-eye",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "A CLI tool for optimizing CSS files by combining properties",
+  "main": "lib/index.js",
+  "bin": {
+    "style-eye": "./bin/style-eye"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/happer64bit/style-eyes"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "css",
+    "optimization",
+    "cli",
+    "command-line",
+    "style"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "commander": "^12.1.0",
     "style-eye": "file:",
