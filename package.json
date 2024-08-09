@@ -4,7 +4,7 @@
   "description": "A CLI tool for optimizing CSS files by combining properties",
   "main": "lib/index.js",
   "bin": {
-    "style-eye": "./bin/style-eye"
+    "style-eye": "./bin/style-eyes"
   },
   "repository": {
     "type": "git",
