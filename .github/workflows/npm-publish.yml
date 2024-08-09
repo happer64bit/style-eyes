@@ -4,6 +4,7 @@ on:
   push: 
     branches: 
       - main
+      
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -15,12 +16,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 20
+          registry-url: 'https://registry.npmjs.org'
       - run: npm install
       - run: npm run build
-      - run: |
-          touch .npmrc
-          echo @happer64bit:https://npm.pkg.github.com/ > .npmrc
-          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
       - run: npm publish
         env:
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NODE_TOKEN }}
