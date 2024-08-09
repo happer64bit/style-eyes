@@ -1,8 +1,9 @@
 {
-  "name": "@happer64bit/style-eyes",
-  "version": "1.0.0",
+  "name": "style-eyes",
+  "version": "1.0.1",
   "description": "A CLI tool for optimizing CSS files by combining properties",
   "main": "lib/index.js",
+  "private": false,
   "bin": {
     "style-eye": "./bin/style-eyes"
   },
@@ -25,9 +26,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@happer64bit/style-eyes": "file:",
     "commander": "^12.1.0",
-    "style-eye": "file:",
     "style-eyes": "file:"
   },
   "devDependencies": {
@@ -38,5 +37,8 @@
     "branches": [
       "main"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
