@@ -34,10 +34,6 @@
     "@types/node": "^22.1.0",
     "typescript": "^5.5.4"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "public"
-  },
   "release": {
     "branches": [
       "main"
