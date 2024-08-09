@@ -16,12 +16,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          token: ${{ secrets.NODE_AUTH_TOKEN }}
+          token: ${{ secrets.NODE_TOKEN }}
           registry-url: 'https://registry.npmjs.org'
       - run: npm config set registry https://registry.npmjs.org
-      - run: npm config set _auth ${{ secrets.NODE_AUTH_TOKEN }}
+      - run: npm config set _auth ${{ secrets.NODE_TOKEN }}
       - run: npm install
       - run: npm run build
       - run: npm publish
         env:
-          NPM_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NODE_TOKEN }}
