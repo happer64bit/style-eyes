@@ -1,7 +1,4 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: Node.js Package
+name: Publish
 
 on:
   push: 
@@ -9,37 +6,22 @@ on:
       - main
 
 jobs:
-  test:
-    name: Publish
+  publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write # needed for provenance data generation
-    timeout-minutes: 10
+      packages: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 20
-          registry-url: https://registry.npmjs.org/
-
-      - name: Install dependencies
-        run: npm install
-        shell: bash
-
-      - name: Print Environment Info
-        run: npx nx report
-        shell: bash
-
-      - name: Publish packages
-        run: npx nx release publish
-        shell: bash
+      - run: npm install
+      - run: npm run build
+      - run: |
+          echo @lexacode:https://npm.pkg.github.com/ > build/.npmrc
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
+      - run: npm publish
+        working-directory: ./build
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
-
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
