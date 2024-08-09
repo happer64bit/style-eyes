@@ -1,26 +1,23 @@
 name: Publish package to GitHub Packages
-on:
-  push: 
-    branches: 
-        - main
 
+on:
+    push:
+        branches: main
+  
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://npm.pkg.github.com'
-      - run: |
-            npm config set //npm.pkg.github.com/happer64bit/:_authToken=\${NODE_AUTH_TOKEN}
-            npm config set registry https://npm.pkg.github.com/happer64bit/
-            npm config set always-auth false
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_TOKEN }}
+    publish:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v3
+          with:
+            node-version: "20"
+        - run: npm ci
+        - run: npm test
+        - uses: JS-DevTools/npm-publish@v3
+          id: publish
+          with:
+            token: ${{ secrets.NODE_TOKEN }}
+        - if: ${{ steps.publish.outputs.type }}
+          run: echo "Version changed!"
+        
