@@ -1,3 +1,4 @@
+
 export function optimizeCSS(css: string): string {
     return css
         // Combine padding properties
@@ -96,4 +97,3 @@ export function optimizeCSS(css: string): string {
         .replace(/display:\s*([^\s;]+);/g,
             'display: $1;');
 }
-

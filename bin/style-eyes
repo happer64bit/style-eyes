@@ -5,17 +5,23 @@ const fs = require('fs');
 const path = require('path');
 const { optimizeCSS } = require('../lib/index');
 
-// Define command options with default output file
 program
   .version('1.0.0')
   .description('Optimize CSS files by combining properties')
   .arguments('<inputFile> [outputFile]')
-  .action((inputFile, outputFile) => {
+  .option('-o, --overwrite', 'overwrite the output file if it exists')
+  .action((inputFile, outputFile, cmdObj) => {
     // Set default output file if not provided
     const defaultOutputFile = inputFile.replace(/\.css$/, '.o.css');
     const outputPath = outputFile
       ? path.resolve(process.cwd(), outputFile)
       : path.resolve(process.cwd(), defaultOutputFile);
+
+    // Check if the output file exists and overwrite flag is not set
+    if (fs.existsSync(outputPath) && !cmdObj.overwrite) {
+      console.error(`Error: Output file "${outputPath}" already exists. Use -o or --overwrite to overwrite it.`);
+      process.exit(1);
+    }
 
     // Read the input file
     const inputPath = path.resolve(process.cwd(), inputFile);

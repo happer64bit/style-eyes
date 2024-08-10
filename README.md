@@ -24,16 +24,17 @@ npm install
 
 ## Usage
 
-The `style-eyes` CLI tool optimizes CSS files and writes the output to a specified file. If no output file is provided, the optimized CSS will overwrite the input file.
+The `style-eyes` CLI tool optimizes CSS files and writes the output to a specified file. You can choose to overwrite the original file if desired.
 
 ### Command
 
 ```bash
-style-eyes <inputFile> [outputFile]
+style-eyes <inputFile> [outputFile] [-o, --overwrite]
 ```
 
 - `<inputFile>`: Path to the input CSS file.
 - `[outputFile]`: Optional path to the output CSS file. If not provided, the optimized CSS will be written to `<inputFile>.o.css`.
+- `-o, --overwrite`: Optional flag to overwrite the output file if it exists.
 
 ### Examples
 
@@ -46,7 +47,7 @@ style-eyes styles.css styles.o.css
 Optimize `styles.css` and overwrite the original file:
 
 ```bash
-style-eyes styles.css
+style-eyes styles.css -o
 ```
 
 ## License
